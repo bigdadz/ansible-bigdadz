@@ -1,0 +1,17 @@
+- name: Install Fail2Ban
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages:
+      - fail2ban
+      - unzip
+- name: Create Config Fail2Ban
+  template:
+    src: conf/fail2ban.conf
+    dest: /etc/fail2ban/jail.local
+- name: start fail2ban
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes

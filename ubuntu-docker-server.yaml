@@ -1,0 +1,23 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Upgrade package
+      import_tasks: tasks/update_package.yaml
+    - name: Install docker
+      import_tasks: tasks/docker.yaml
+    - name: Install fail2ban
+      import_tasks: tasks/fail2ban.yaml
+    - name: UFW - Allow SSH connections
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+    - name: Allow access to HTTPS
+      ufw:
+        rule: allow
+        port: "443"
+        proto: tcp
+    - name: UFW - Enable and deny by default
+      community.general.ufw:
+        state: enabled
+        default: deny
