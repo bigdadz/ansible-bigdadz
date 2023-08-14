@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: docker-server
   remote_user: root
   tasks:
     - name: Upgrade package
@@ -21,3 +21,8 @@
       community.general.ufw:
         state: enabled
         default: deny
+    - name: Remove dependencies that are no longer required
+      ansible.builtin.apt:
+        autoremove: yes
+    - name: Minimize Packages
+      import_tasks: tasks/clean.yaml

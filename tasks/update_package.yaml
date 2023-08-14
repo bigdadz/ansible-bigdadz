@@ -12,3 +12,9 @@
       - ufw
     state: latest
     update_cache: true
+- name: Configure Automatic Security Updates
+  apt:
+    pkg:
+      - unattended-upgrades
+    state: latest
+    update_cache: true
